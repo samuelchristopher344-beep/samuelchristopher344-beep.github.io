@@ -1,0 +1,77 @@
+/* ===== Body & General Styles ===== */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  background: #f4f4f4;
+  color: #333;
+}
+
+/* ===== Header with Boxed Logo & Navigation ===== */
+header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #222;
+  color: white;
+  padding: 10px 15px;
+}
+
+/* Boxed logo */
+.logo-box {
+  display: inline-block;
+  padding: 6px 14px;
+  background: #ffffff;
+  color: #222;
+  font-size: 22px;
+  font-weight: bold;
+  border-radius: 4px;
+}
+
+/* Navigation links */
+nav a {
+  color: white;
+  margin-left: 15px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: color 0.2s ease;
+}
+
+nav a:hover {
+  color: #f0c040;  /* Highlight on hover */
+}
+
+/* ===== Main Content ===== */
+main {
+  padding: 20px;
+}
+
+/* Article boxes */
+article {
+  background: white;
+  padding: 15px;
+  margin-bottom: 20px;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+/* ===== Ad Box Placeholder ===== */
+.ad-box {
+  background: #eaeaea;
+  text-align: center;
+  padding: 20px;
+  margin: 20px 0;
+  border: 1px dashed #999;
+  border-radius: 5px;
+  font-style: italic;
+  color: #555;
+}
+
+/* ===== Footer ===== */
+footer {
+  background: #222;
+  color: white;
+  text-align: center;
+  padding: 10px;
+  font-size: 14px;
+    }
+    
