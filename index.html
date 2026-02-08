@@ -83,39 +83,37 @@
     document.getElementById("nav-menu").classList.toggle("active");
   }
 
-  // NewsAPI setup
-  const apiKey = "e7358d77a9804f7a960ce7b542170bb6";
-  const newsContainer = document.getElementById("news-articles");
-  const newsUrl = `https://newsapi.org/v2/top-headlines?category=general&language=en&q=Africa&apiKey=${apiKey}`;
+  // GNews API settings
+  const apiKey = "0fc1c5be462dd379028852bd59e523c2";
+  const gnewsUrl = `https://gnews.io/api/v4/top-headlines?topic=general&country=ng&lang=en&max=10&token=${apiKey}`;
 
   async function loadNews() {
-    newsContainer.innerHTML = "Loading news...";
+    const container = document.getElementById("news-articles");
+    container.innerHTML = "Loading news...";
 
     try {
-      const response = await fetch(newsUrl);
+      const response = await fetch(gnewsUrl);
       const data = await response.json();
 
-      if (data.status !== "ok") throw new Error("Failed to fetch news");
+      container.innerHTML = ""; // clear loading text
 
-      newsContainer.innerHTML = "";
-
-      data.articles.forEach(article => {
-        const img = article.urlToImage || "placeholder.png";
+      data.articles.forEach(item => {
+        const img = item.image ? item.image : "placeholder.png";
         const card = document.createElement("div");
         card.className = "news-card";
 
         card.innerHTML = `
           <img src="${img}" alt="News Image">
-          <h3>${article.title}</h3>
-          <p>${article.description ? article.description.substring(0, 120) : ""}...</p>
-          <p class="source">Source: ${article.source.name}</p>
-          <a href="${article.url}" target="_blank">Read more</a>
+          <h3>${item.title}</h3>
+          <p>${item.description ? item.description.substring(0, 120) : ""}...</p>
+          <p class="source">Source: ${item.source.name}</p>
+          <a href="${item.url}" target="_blank">Read more</a>
         `;
-        newsContainer.appendChild(card);
+        container.appendChild(card);
       });
 
     } catch (err) {
-      newsContainer.innerHTML = "Unable to load news at this time.";
+      container.innerHTML = "Unable to load news at this time.";
       console.error(err);
     }
   }
