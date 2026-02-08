@@ -29,7 +29,7 @@
 
 <main>
 
-  <!-- My Original Posts -->
+  <!-- ===== My Original Posts ===== -->
   <section class="posts-section">
     <h2>Latest Articles</h2>
 
@@ -49,7 +49,7 @@
     </div>
   </section>
 
-  <!-- Advertisement -->
+  <!-- ===== Advertisement ===== -->
   <div class="ad-box">
     <ins class="adsbygoogle"
          style="display:block"
@@ -62,9 +62,9 @@
     </script>
   </div>
 
-  <!-- Dynamic News Section -->
+  <!-- ===== Phoenix-Style Africa News Section ===== -->
   <section class="news-section">
-    <h2>Top Africa News</h2>
+    <h2>Top African News</h2>
     <div id="news-articles" class="news-grid">
       <!-- News cards will be inserted here via JS -->
     </div>
@@ -76,41 +76,45 @@
   <p>© 2026 samblog. All rights reserved.</p>
 </footer>
 
-<!-- Scripts -->
+<!-- ===== Scripts ===== -->
 <script>
-  // Toggle mobile menu
+  // Mobile menu toggle
   function toggleMenu() {
     document.getElementById("nav-menu").classList.toggle("active");
   }
 
-  // Fetch BBC Africa RSS feed and display news
-  const rssUrl = "https://feeds.bbci.co.uk/africa/rss.xml";
+  // Multiple RSS feeds: BBC Africa, Al Jazeera Africa, CNN Africa
+  const rssFeeds = [
+    "https://feeds.bbci.co.uk/africa/rss.xml",
+    "https://www.aljazeera.com/xml/rss/all.xml",
+    "https://edition.cnn.com/rss/edition_africa.rss"
+  ];
 
   async function loadNews() {
     const container = document.getElementById("news-articles");
     container.innerHTML = "Loading news...";
 
     try {
-      const response = await fetch(`https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(rssUrl)}`);
-      const data = await response.json();
+      container.innerHTML = ""; // clear container
+      for (const feed of rssFeeds) {
+        const response = await fetch(`https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(feed)}`);
+        const data = await response.json();
 
-      container.innerHTML = ""; // clear loading text
+        data.items.forEach(item => {
+          const img = item.enclosure && item.enclosure.link ? item.enclosure.link : "placeholder.png";
+          const card = document.createElement("div");
+          card.className = "news-card";
 
-      data.items.forEach(item => {
-        const img = item.enclosure && item.enclosure.link ? item.enclosure.link : "placeholder.png";
-        const card = document.createElement("div");
-        card.className = "news-card";
-
-        card.innerHTML = `
-          <img src="${img}" alt="News Image">
-          <h3>${item.title}</h3>
-          <p>${item.description.substring(0, 120)}...</p>
-          <p class="source">Source: BBC Africa</p>
-          <a href="${item.link}" target="_blank">Read more</a>
-        `;
-        container.appendChild(card);
-      });
-
+          card.innerHTML = `
+            <img src="${img}" alt="News Image">
+            <h3>${item.title}</h3>
+            <p>${item.description.substring(0, 120)}...</p>
+            <p class="source">Source: ${data.feed.title}</p>
+            <a href="${item.link}" target="_blank">Read more</a>
+          `;
+          container.appendChild(card);
+        });
+      }
     } catch (err) {
       container.innerHTML = "Unable to load news at this time.";
       console.error(err);
@@ -121,4 +125,4 @@
 </script>
 
 </body>
-                                    </html>
+  </html>
