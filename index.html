@@ -83,40 +83,39 @@
     document.getElementById("nav-menu").classList.toggle("active");
   }
 
-  // Multiple RSS feeds: BBC Africa, Al Jazeera Africa, CNN Africa
-  const rssFeeds = [
-    "https://feeds.bbci.co.uk/africa/rss.xml",
-    "https://www.aljazeera.com/xml/rss/all.xml",
-    "https://edition.cnn.com/rss/edition_africa.rss"
-  ];
+  // NewsAPI setup
+  const apiKey = "e7358d77a9804f7a960ce7b542170bb6";
+  const newsContainer = document.getElementById("news-articles");
+  const newsUrl = `https://newsapi.org/v2/top-headlines?category=general&language=en&q=Africa&apiKey=${apiKey}`;
 
   async function loadNews() {
-    const container = document.getElementById("news-articles");
-    container.innerHTML = "Loading news...";
+    newsContainer.innerHTML = "Loading news...";
 
     try {
-      container.innerHTML = ""; // clear container
-      for (const feed of rssFeeds) {
-        const response = await fetch(`https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(feed)}`);
-        const data = await response.json();
+      const response = await fetch(newsUrl);
+      const data = await response.json();
 
-        data.items.forEach(item => {
-          const img = item.enclosure && item.enclosure.link ? item.enclosure.link : "placeholder.png";
-          const card = document.createElement("div");
-          card.className = "news-card";
+      if (data.status !== "ok") throw new Error("Failed to fetch news");
 
-          card.innerHTML = `
-            <img src="${img}" alt="News Image">
-            <h3>${item.title}</h3>
-            <p>${item.description.substring(0, 120)}...</p>
-            <p class="source">Source: ${data.feed.title}</p>
-            <a href="${item.link}" target="_blank">Read more</a>
-          `;
-          container.appendChild(card);
-        });
-      }
+      newsContainer.innerHTML = "";
+
+      data.articles.forEach(article => {
+        const img = article.urlToImage || "placeholder.png";
+        const card = document.createElement("div");
+        card.className = "news-card";
+
+        card.innerHTML = `
+          <img src="${img}" alt="News Image">
+          <h3>${article.title}</h3>
+          <p>${article.description ? article.description.substring(0, 120) : ""}...</p>
+          <p class="source">Source: ${article.source.name}</p>
+          <a href="${article.url}" target="_blank">Read more</a>
+        `;
+        newsContainer.appendChild(card);
+      });
+
     } catch (err) {
-      container.innerHTML = "Unable to load news at this time.";
+      newsContainer.innerHTML = "Unable to load news at this time.";
       console.error(err);
     }
   }
