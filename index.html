@@ -6,17 +6,16 @@
   <title>samblog – News & Articles</title>
   <meta name="description" content="samblog shares educational articles and latest African news from trusted sources.">
 
-  <!-- Styles -->
   <link rel="stylesheet" href="style.css">
 
-  <!-- Google AdSense (LOAD ONCE ONLY) -->
+  <!-- Google AdSense (load once) -->
   <script async
     src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1758802460740402"
     crossorigin="anonymous"></script>
 </head>
 <body>
 
-<!-- ================= HEADER ================= -->
+<!-- ===== HEADER ===== -->
 <header>
   <div class="logo-box">samblog</div>
   <div class="menu-icon" onclick="toggleMenu()">☰</div>
@@ -30,10 +29,10 @@
   </nav>
 </header>
 
-<!-- ================= MAIN CONTENT ================= -->
+<!-- ===== MAIN ===== -->
 <main>
 
-  <!-- ===== ORIGINAL POSTS ===== -->
+  <!-- ===== YOUR ORIGINAL POSTS ===== -->
   <section class="posts-section">
     <h2>Latest Articles</h2>
 
@@ -53,7 +52,7 @@
     </div>
   </section>
 
-  <!-- ===== REAL ADSENSE AD (CORRECT POSITION) ===== -->
+  <!-- ===== ADSENSE (CORRECT POSITION) ===== -->
   <div class="ad-box">
     <ins class="adsbygoogle"
          style="display:block"
@@ -67,7 +66,7 @@
     (adsbygoogle = window.adsbygoogle || []).push({});
   </script>
 
-  <!-- ===== AFRICAN NEWS SECTION (PHOENIX STYLE) ===== -->
+  <!-- ===== GOOGLE NEWS (PHOENIX STYLE) ===== -->
   <section class="news-section">
     <h2>Top African News</h2>
     <div id="news-articles" class="news-grid">
@@ -77,20 +76,19 @@
 
 </main>
 
-<!-- ================= FOOTER ================= -->
 <footer>
   <p>© 2026 samblog. All rights reserved.</p>
 </footer>
 
-<!-- ================= SCRIPTS ================= -->
+<!-- ===== SCRIPTS ===== -->
 <script>
-  // Mobile menu
   function toggleMenu() {
     document.getElementById("nav-menu").classList.toggle("active");
   }
 
-  // BBC Africa RSS (WORKS ON GITHUB PAGES)
-  const rssUrl = "https://feeds.bbci.co.uk/africa/rss.xml";
+  /* Google News Africa RSS */
+  const rssUrl =
+    "https://news.google.com/rss/search?q=africa&hl=en-NG&gl=NG&ceid=NG:en";
 
   async function loadNews() {
     const container = document.getElementById("news-articles");
@@ -105,7 +103,10 @@
       container.innerHTML = "";
 
       data.items.slice(0, 6).forEach(item => {
-        const img = item.enclosure && item.enclosure.link ? item.enclosure.link : "";
+        const img =
+          item.enclosure && item.enclosure.link
+            ? item.enclosure.link
+            : "";
 
         const card = document.createElement("div");
         card.className = "news-card";
@@ -114,7 +115,7 @@
           ${img ? `<img src="${img}" alt="News image">` : ""}
           <h3>${item.title}</h3>
           <p>${item.description.replace(/<[^>]*>/g, "").slice(0, 120)}...</p>
-          <p class="source">Source: BBC Africa</p>
+          <p class="source">Source: Google News</p>
           <a href="${item.link}" target="_blank" rel="noopener">Read more</a>
         `;
 
@@ -131,4 +132,4 @@
 </script>
 
 </body>
-  </html>
+      </html>
