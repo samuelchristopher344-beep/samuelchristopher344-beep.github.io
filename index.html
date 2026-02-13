@@ -4,14 +4,14 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>samblog News & Articles</title>
-  <meta name="description" content="Latest African news in a Phoenix-style layout, plus educational posts.">
+  <meta name="description" content="Latest African news and original educational articles.">
 
-  <!-- Styles -->
   <link rel="stylesheet" href="style.css">
 
   <!-- Google AdSense -->
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1758802460740402"
-          crossorigin="anonymous"></script>
+  <script async
+,    src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1758802460740402"
+    crossorigin="anonymous"></script>
 </head>
 <body>
 
@@ -29,29 +29,30 @@
 
 <main>
 
-  <!-- ===== My Original Posts ===== -->
+  <!-- ===== ORIGINAL POSTS ===== -->
   <section class="posts-section">
     <h2>Latest Articles</h2>
 
     <div class="post-card">
       <h3><a href="post1.html">What Is Blogging and Why Is It Important?</a></h3>
-      <p>Learn the basics of blogging, why it matters, and how beginners can start.</p>
+      <p>Learn the basics of blogging and why it matters.</p>
     </div>
 
     <div class="post-card">
       <h3><a href="post2.html">What Is Google AdSense and How It Works?</a></h3>
-      <p>A simple explanation of how website owners earn money using Google AdSense.</p>
+      <p>Understand how AdSense helps website owners earn.</p>
     </div>
 
     <div class="post-card">
       <h3><a href="post3.html">Common Mistakes New Website Owners Make</a></h3>
-      <p>Avoid common beginner mistakes when creating and managing a website.</p>
+      <p>Avoid beginner mistakes when building a website.</p>
     </div>
   </section>
 
-  <!-- ===== Advertisement ===== -->
+  <!-- ===== AD PLACEHOLDER ===== -->
   <div class="ad-box">
     <ins class="adsbygoogle"
+    <p>Advertisement</p>
          style="display:block"
          data-ad-client="ca-pub-1758802460740402"
          data-ad-slot="9685079329"
@@ -62,11 +63,11 @@
     </script>
   </div>
 
-  <!-- ===== Phoenix-Style Africa News Section ===== -->
+  <!-- ===== AFRICAN NEWS ===== -->
   <section class="news-section">
     <h2>Top African News</h2>
     <div id="news-articles" class="news-grid">
-      <!-- News cards will be inserted here via JS -->
+      Loading news…
     </div>
   </section>
 
@@ -76,49 +77,48 @@
   <p>© 2026 samblog. All rights reserved.</p>
 </footer>
 
-<!-- ===== Scripts ===== -->
 <script>
-  // Mobile menu toggle
-  function toggleMenu() {
-    document.getElementById("nav-menu").classList.toggle("active");
+function toggleMenu() {
+  document.getElementById("nav-menu").classList.toggle("active");
+}
+
+const rssUrl = "https://feeds.bbci.co.uk/africa/rss.xml";
+
+async function loadNews() {
+  const container = document.getElementById("news-articles");
+
+  try {
+    const response = await fetch(
+      "https://api.rss2json.com/v1/api.json?rss_url=" +
+      encodeURIComponent(rssUrl)
+    );
+
+    const data = await response.json();
+    container.innerHTML = "";
+
+    data.items.slice(0, 6).forEach(item => {
+      const image = item.enclosure?.link || "";
+      const card = document.createElement("div");
+      card.className = "news-card";
+
+      card.innerHTML = `
+        ${image ? `<img src="${image}" alt="">` : ""}
+        <h3>${item.title}</h3>
+        <p>${item.description.replace(/<[^>]+>/g, "").slice(0, 120)}...</p>
+        <p class="source">Source: BBC Africa</p>
+        <a href="${item.link}" target="_blank" rel="noopener">Read more</a>
+      `;
+
+      container.appendChild(card);
+    });
+
+  } catch (e) {
+    container.innerHTML = "Unable to load news at this time.";
+    console.error(e);
   }
+}
 
-  // GNews API settings
-  const apiKey = "0fc1c5be462dd379028852bd59e523c2";
-  const gnewsUrl = `https://gnews.io/api/v4/top-headlines?topic=general&country=ng&lang=en&max=10&token=${apiKey}`;
-
-  async function loadNews() {
-    const container = document.getElementById("news-articles");
-    container.innerHTML = "Loading news...";
-
-    try {
-      const response = await fetch(gnewsUrl);
-      const data = await response.json();
-
-      container.innerHTML = ""; // clear loading text
-
-      data.articles.forEach(item => {
-        const img = item.image ? item.image : "placeholder.png";
-        const card = document.createElement("div");
-        card.className = "news-card";
-
-        card.innerHTML = `
-          <img src="${img}" alt="News Image">
-          <h3>${item.title}</h3>
-          <p>${item.description ? item.description.substring(0, 120) : ""}...</p>
-          <p class="source">Source: ${item.source.name}</p>
-          <a href="${item.url}" target="_blank">Read more</a>
-        `;
-        container.appendChild(card);
-      });
-
-    } catch (err) {
-      container.innerHTML = "Unable to load news at this time.";
-      console.error(err);
-    }
-  }
-
-  loadNews();
+loadNews();
 </script>
 
 </body>
