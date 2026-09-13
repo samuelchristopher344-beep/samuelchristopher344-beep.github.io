@@ -545,28 +545,3 @@
 
 </body>
 </html>
-        const card = document.createElement("div");
-        card.className = "news-card";
-
-        card.innerHTML = `
-          <img src="${img}" alt="News Image">
-          <h3>${item.title}</h3>
-          <p>${item.description.substring(0, 120)}...</p>
-          <p class="source">Source: ${data.feed.title}</p>
-          <a href="${item.link}" target="_blank">Read more</a>
-        `;
-
-        container.appendChild(card);
-      });
-
-    } catch (error) {
-      container.innerHTML = "Unable to load news at this time.";
-      console.error(error);
-    }
-  }
-
-  loadNews();
-</script>
-
-</body>
-      </html>
