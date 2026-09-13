@@ -3,36 +3,48 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>About samblog</title>
+  <title>About christoflightX-1 | Engineering Projects & Innovation</title>
   <link rel="stylesheet" href="style.css">
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1758802460740402"
           crossorigin="anonymous"></script>
 </head>
 <body>
 
-<header>
+<header class="site-header">
   <div class="logo-box">christoflightX-1</div>
-  <div class="menu-icon" onclick="toggleMenu()">☰</div>
-  <nav id="nav-menu">
+  <button class="menu-toggle" onclick="toggleMenu()" aria-label="Open navigation menu">☰</button>
+  <nav id="mainNav">
     <a href="index.html">Home</a>
+    <a href="projects.html">Projects</a>
+    <a href="innovations.html">Innovations</a>
+    <a href="experiments.html">Experiments</a>
+    <a href="wiki.html">Engineering Wiki</a>
     <a href="about.html">About</a>
-    <a href="privacy.html">Privacy Policy</a>
-    <a href="wiki.html">Wiki</a>
     <a href="contact.html">Contact</a>
   </nav>
 </header>
 
 <main>
-  <article>
-    <h2>About christoflightX-1</h2>
-    <p>
-      christoflightX-1 is an engineers website created to share useful, educational,
-      and original content for readers worldwide.
-    </p>
-    <p>
-      We focus on clarity, honesty, and value while respecting Google AdSense policies.
-    </p>
-  </article>
+  <section class="section">
+    <div class="section-heading">
+      <h2>About christoflightX-1</h2>
+    </div>
+    <article class="vision-content">
+      <p>
+        christoflightX-1 is an engineering innovation platform dedicated to exploring ideas, 
+        designing solutions, and building the future through projects, experiments, and inventions.
+      </p>
+      <p>
+        This platform serves as a personal journal and showcase for engineering concepts, prototypes, 
+        and technological innovations spanning mechanical engineering, aerospace, transportation, 
+        electronics, and future technologies.
+      </p>
+      <p>
+        We focus on clarity, innovation, and practical engineering while respecting ethical standards 
+        and providing valuable content to the engineering community worldwide.
+      </p>
+    </article>
+  </section>
 
   <!-- AdSense Ad Unit -->
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1758802460740402"
@@ -49,14 +61,33 @@
 </main>
 
 <footer>
-  <p>© 2026 samblog. All rights reserved.</p>
+  <div class="footer-content">
+    <div>
+      <h3>christoflightX-1</h3>
+      <p>Engineering Ideas. Building the Future.</p>
+    </div>
+    <div class="footer-links">
+      <a href="index.html">Home</a>
+      <a href="projects.html">Projects</a>
+      <a href="innovations.html">Innovations</a>
+      <a href="experiments.html">Experiments</a>
+      <a href="wiki.html">Engineering Wiki</a>
+      <a href="about.html">About</a>
+      <a href="privacy.html">Privacy Policy</a>
+      <a href="contact.html">Contact</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2026 christoflightX-1. All rights reserved.</p>
+  </div>
 </footer>
 
 <script>
   function toggleMenu() {
-    document.getElementById("nav-menu").classList.toggle("active");
+    const nav = document.getElementById("mainNav");
+    nav.classList.toggle("active");
   }
 </script>
 
 </body>
-  </html>
+</html>
