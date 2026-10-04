@@ -596,6 +596,12 @@ footer {
   font-size: 0.82rem;
 }
 
+.footer-credit {
+  color: rgba(255, 255, 255, 0.56);
+  font-size: 0.75rem;
+  margin-top: 8px;
+}
+
 /* ===========================
    MOBILE MENU
    =========================== */
