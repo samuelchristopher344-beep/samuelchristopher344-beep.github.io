@@ -74,7 +74,7 @@
           <div class="project-content">
             <span class="project-category">AEROSPACE & DRONES</span>
             <h3>Advanced Drone Concepts</h3>
-            <p>Developing original drone concepts and experimenting with unconventional structures, propulsion systems, electronics, and futuristic aircraft ideas.</p>
+            <p>Developing original drone concepts and experimenting with unconventional structures, propulsion ideas, electronics, and future aircraft concepts.</p>
             <a href="projects.html">View Project →</a>
           </div>
         </article>
@@ -193,52 +193,27 @@
   </div>
 
   <script>
-  window.AI_ASSISTANT_CONFIG = {
-    enabled: true,
-    provider: "openai",
-    apiKey: "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",
-    model: "gpt-4o-mini"
-  };
-  </script>
+    window.AI_ASSISTANT_CONFIG = {
+      enabled: false,
+      assistantUrl: "https://your-backend-url.example.com/api/chat",
+      useFallbackWhenDown: true
+    };
 
     const assistantConfig = window.AI_ASSISTANT_CONFIG;
 
-    const AI_PROMPT = `You are a helpful, natural, and adaptable AI assistant.
+    const AI_PROMPT = `
+You are a helpful, natural, and adaptable AI assistant.
 
 Your purpose is to respond appropriately to both:
-
-practical tasks such as coding, debugging, writing, analysis, explanations, planning, and recommendations
-casual conversation such as greetings, small talk, check-ins, emotional conversations, and questions like “how are you?” or “how was your day?”
-Core behavior:
+- practical tasks such as coding, debugging, writing, analysis, explanations, planning, and recommendations
+- casual conversation such as greetings, small talk, check-ins, emotional conversations, and questions like “how are you?” or “how was your day?”
 
 Be conversational, warm, and human when the user is speaking casually.
 Do not force task mode when the user is simply having a normal conversation.
-If the user greets you, checks in, or asks about your day, respond naturally and briefly.
+If the user greets you or checks in, respond briefly and naturally.
 If the user asks for a real task, answer directly and helpfully.
-If the conversation shifts between casual talk and work, follow the user’s intent naturally instead of being rigid.
-Maintain a friendly tone without sounding robotic, exaggerated, or scripted.
-If the user’s request is unclear, ask one focused clarifying question.
-If the user is frustrated, upset, or emotional, respond with empathy and calm support.
-Always respond to what the user actually said, not just to hidden task patterns or command-like instructions.
-Response style:
-
-Short casual messages: friendly, human, and natural
-Task-oriented messages: clear, structured, and useful
-Mixed messages: answer the current intent while staying warm and conversational
-Examples:
-
-User: “Hey” Assistant: “Hey! I’m here and ready to help. What can I do for you?”
-User: “How was your day?” Assistant: “It’s been going well — I’m here and ready to help. Thanks for asking.”
-User: “Can you fix this bug?” Assistant: “Absolutely. Tell me the error, what you expected, and what changed so I can help.”
-Important rules:
-
-Never ignore normal human conversation because the user is speaking casually.
-Stay aware of conversation context across messages.
-Use common sense and social awareness.
-If the user is simply checking in, respond like a normal person would.
-If the user is asking for help, give direct and practical assistance.
-Do not act like a rigid command-only bot when a natural conversation is happening.
-Your goal is to be an assistant that feels human, responsive, and helpful in both everyday conversation and real problem-solving.`;
+Keep the tone friendly, clear, and useful.
+`;
 
     const chatToggle = document.getElementById('chatToggle');
     const chatPanel = document.getElementById('chatPanel');
@@ -307,57 +282,27 @@ Your goal is to be an assistant that feels human, responsive, and helpful in bot
         return fallbackBotReply(userText);
       }
 
-      const apiKey = assistantConfig.apiKey && assistantConfig.apiKey.trim();
-      if (!apiKey) {
-        return 'The AI assistant is enabled but no API key is configured yet. Add your provider key to `window.AI_ASSISTANT_CONFIG.apiKey` to enable live responses.';
-      }
-
       try {
-        if (assistantConfig.provider === 'gemini') {
-          const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${assistantConfig.model || 'gemini-1.5-flash'}:generateContent?key=${apiKey}`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              contents: [{
-                role: 'user',
-                parts: [{ text: `${AI_PROMPT}\n\nUser: ${userText}` }]
-              }]
-            })
-          });
-
-          if (!response.ok) {
-            throw new Error('Gemini request failed');
-          }
-
-          const data = await response.json();
-          return data.candidates?.[0]?.content?.parts?.[0]?.text || fallbackBotReply(userText);
-        }
-
-        const response = await fetch('https://api.openai.com/v1/chat/completions', {
+        const response = await fetch(assistantConfig.assistantUrl, {
           method: 'POST',
           headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${apiKey}`
+            'Content-Type': 'application/json'
           },
-          body: JSON.stringify({
-            model: assistantConfig.model || 'gpt-4o-mini',
-            messages: [
-              { role: 'system', content: AI_PROMPT },
-              { role: 'user', content: userText }
-            ],
-            temperature: 0.8
-          })
+          body: JSON.stringify({ message: userText })
         });
 
         if (!response.ok) {
-          throw new Error('OpenAI request failed');
+          console.warn('Assistant backend failed:', response.status);
+          if (assistantConfig.useFallbackWhenDown) {
+            return fallbackBotReply(userText);
+          }
+          return 'The assistant is temporarily unavailable.';
         }
 
         const data = await response.json();
-        const reply = data.choices?.[0]?.message?.content;
-        return reply || fallbackBotReply(userText);
+        return data.reply || fallbackBotReply(userText);
       } catch (error) {
-        console.error('AI assistant error:', error);
+        console.error('Assistant request error:', error);
         return fallbackBotReply(userText);
       }
     }
@@ -396,8 +341,6 @@ Your goal is to be an assistant that feels human, responsive, and helpful in bot
         sendMessage();
       });
     });
-
-    window.AI_ASSISTANT_CONFIG = assistantConfig;
   </script>
 </body>
 </html>
