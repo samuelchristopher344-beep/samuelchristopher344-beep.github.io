@@ -8,30 +8,40 @@
   box-sizing: border-box;
 }
 
-/* Typography & Colors */
+html {
+  scroll-behavior: smooth;
+}
+
 :root {
   --primary-color: #0066ff;
   --secondary-color: #00cc99;
   --dark-bg: #0a0e27;
+  --dark-bg-2: #111a34;
   --light-text: #e0e0e0;
   --card-bg: #1a1f3a;
   --accent: #ff6b35;
   --border-color: #2a3555;
-  --text-muted: #8a8fa3;
-}
-
-html {
-  scroll-behavior: smooth;
+  --text-muted: #a3acc7;
+  --shadow-soft: 0 12px 30px rgba(0, 0, 0, 0.18);
 }
 
 body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
-  background-color: var(--dark-bg);
+  background: linear-gradient(180deg, var(--dark-bg) 0%, #0d132b 100%);
   color: var(--light-text);
   line-height: 1.6;
   overflow-x: hidden;
+}
+
+a {
+  color: inherit;
+}
+
+img {
+  max-width: 100%;
+  display: block;
 }
 
 /* ===========================
@@ -42,22 +52,25 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 20px 40px;
-  background: linear-gradient(135deg, rgba(10, 14, 39, 0.95), rgba(26, 31, 58, 0.95));
-  border-bottom: 1px solid var(--border-color);
+  gap: 20px;
+  padding: 18px 40px;
+  background: rgba(10, 14, 39, 0.96);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
   position: sticky;
   top: 0;
   z-index: 100;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
 }
 
 .logo-box {
-  font-size: 24px;
+  font-size: clamp(1.1rem, 2vw, 1.7rem);
   font-weight: 900;
   background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  letter-spacing: 2px;
+  letter-spacing: 1.5px;
 }
 
 .menu-toggle {
@@ -72,30 +85,40 @@ body {
 
 nav {
   display: flex;
-  gap: 30px;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 18px 26px;
 }
 
 nav a {
   color: var(--light-text);
   text-decoration: none;
   font-weight: 500;
-  font-size: 14px;
-  transition: all 0.3s ease;
+  font-size: 0.9rem;
+  transition: color 0.25s ease, opacity 0.25s ease;
   position: relative;
+  opacity: 0.92;
 }
 
 nav a::after {
   content: '';
   position: absolute;
-  bottom: -5px;
+  bottom: -6px;
   left: 0;
   width: 0;
   height: 2px;
   background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-  transition: width 0.3s ease;
+  transition: width 0.25s ease;
 }
 
-nav a:hover::after {
+nav a:hover,
+nav a:focus-visible {
+  color: #ffffff;
+}
+
+nav a:hover::after,
+nav a:focus-visible::after {
   width: 100%;
 }
 
@@ -104,60 +127,63 @@ nav a:hover::after {
    =========================== */
 
 .hero {
-  background: linear-gradient(135deg, rgba(0, 102, 255, 0.1), rgba(0, 204, 153, 0.1));
-  padding: 120px 40px;
+  background: radial-gradient(circle at top left, rgba(0, 102, 255, 0.14), transparent 35%),
+    radial-gradient(circle at bottom right, rgba(0, 204, 153, 0.12), transparent 34%),
+    linear-gradient(135deg, rgba(0, 102, 255, 0.08), rgba(0, 204, 153, 0.08));
+  padding: 110px 40px 90px;
   text-align: center;
   position: relative;
   overflow: hidden;
-  min-height: 600px;
+  min-height: 560px;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.hero::before {
-  content: '';
-  position: absolute;
-  top: -50%;
-  right: -50%;
-  width: 600px;
-  height: 600px;
-  background: radial-gradient(circle, rgba(0, 102, 255, 0.1), transparent);
-  border-radius: 50%;
-  pointer-events: none;
-}
-
+.hero::before,
 .hero::after {
   content: '';
   position: absolute;
-  bottom: -50%;
-  left: -50%;
-  width: 600px;
-  height: 600px;
-  background: radial-gradient(circle, rgba(0, 204, 153, 0.1), transparent);
+  width: 560px;
+  height: 560px;
   border-radius: 50%;
   pointer-events: none;
+  filter: blur(30px);
+  opacity: 0.35;
+}
+
+.hero::before {
+  top: -170px;
+  right: -120px;
+  background: rgba(0, 102, 255, 0.12);
+}
+
+.hero::after {
+  bottom: -180px;
+  left: -150px;
+  background: rgba(0, 204, 153, 0.12);
 }
 
 .hero-content {
   position: relative;
-  z-index: 2;
-  max-width: 800px;
+  z-index: 1;
+  max-width: 860px;
+  width: 100%;
 }
 
 .hero-label {
   color: var(--secondary-color);
-  font-size: 14px;
-  font-weight: 600;
-  letter-spacing: 3px;
-  margin-bottom: 20px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.28rem;
+  margin-bottom: 18px;
 }
 
 .hero h1 {
-  font-size: 56px;
+  font-size: clamp(2.4rem, 5vw, 4.3rem);
   font-weight: 900;
-  margin-bottom: 20px;
-  line-height: 1.2;
+  margin-bottom: 18px;
+  line-height: 1.08;
   background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -165,15 +191,16 @@ nav a:hover::after {
 }
 
 .hero-text {
-  font-size: 18px;
+  font-size: clamp(1rem, 1.6vw, 1.2rem);
   color: var(--text-muted);
-  margin-bottom: 40px;
+  margin: 0 auto 34px;
   line-height: 1.8;
+  max-width: 700px;
 }
 
 .hero-buttons {
   display: flex;
-  gap: 20px;
+  gap: 18px;
   justify-content: center;
   flex-wrap: wrap;
 }
@@ -183,12 +210,12 @@ nav a:hover::after {
    =========================== */
 
 .btn {
-  padding: 14px 32px;
-  border-radius: 8px;
+  padding: 14px 28px;
+  border-radius: 10px;
   text-decoration: none;
-  font-weight: 600;
-  font-size: 16px;
-  transition: all 0.3s ease;
+  font-weight: 700;
+  font-size: 1rem;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
   display: inline-block;
   cursor: pointer;
   border: none;
@@ -197,22 +224,24 @@ nav a:hover::after {
 .primary-btn {
   background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
   color: white;
-  box-shadow: 0 4px 20px rgba(0, 102, 255, 0.3);
+  box-shadow: 0 8px 25px rgba(0, 102, 255, 0.28);
 }
 
-.primary-btn:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 8px 30px rgba(0, 102, 255, 0.5);
+.primary-btn:hover,
+.primary-btn:focus-visible {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 30px rgba(0, 102, 255, 0.38);
 }
 
 .secondary-btn {
-  background: transparent;
+  background: rgba(255, 255, 255, 0.02);
   color: var(--light-text);
-  border: 2px solid var(--primary-color);
+  border: 2px solid rgba(0, 102, 255, 0.6);
 }
 
-.secondary-btn:hover {
-  background: rgba(0, 102, 255, 0.1);
+.secondary-btn:hover,
+.secondary-btn:focus-visible {
+  background: rgba(0, 102, 255, 0.08);
   border-color: var(--secondary-color);
   color: var(--secondary-color);
 }
@@ -221,29 +250,33 @@ nav a:hover::after {
    SECTIONS
    =========================== */
 
+main {
+  width: 100%;
+}
+
 .section {
-  padding: 100px 40px;
+  padding: 90px 40px;
   max-width: 1200px;
   margin: 0 auto;
 }
 
 .section-heading {
   text-align: center;
-  margin-bottom: 60px;
+  margin-bottom: 52px;
 }
 
 .section-label {
   color: var(--secondary-color);
-  font-size: 14px;
-  font-weight: 600;
-  letter-spacing: 3px;
-  margin-bottom: 15px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.28rem;
+  margin-bottom: 14px;
 }
 
 .section h2 {
-  font-size: 48px;
+  font-size: clamp(2rem, 4vw, 3rem);
   font-weight: 900;
-  margin-bottom: 20px;
+  margin-bottom: 16px;
   background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -252,8 +285,8 @@ nav a:hover::after {
 
 .section-heading > p:last-child {
   color: var(--text-muted);
-  font-size: 18px;
-  max-width: 600px;
+  font-size: 1.08rem;
+  max-width: 640px;
   margin: 0 auto;
 }
 
@@ -262,21 +295,22 @@ nav a:hover::after {
    =========================== */
 
 .vision-section {
-  background: linear-gradient(135deg, rgba(0, 102, 255, 0.05), rgba(0, 204, 153, 0.05));
-  border-radius: 12px;
+  background: linear-gradient(135deg, rgba(0, 102, 255, 0.06), rgba(0, 204, 153, 0.06));
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.04);
 }
 
 .vision-content {
-  max-width: 700px;
+  max-width: 760px;
   margin: 0 auto;
   text-align: center;
 }
 
 .vision-content p {
   color: var(--text-muted);
-  font-size: 18px;
+  font-size: 1.08rem;
   line-height: 1.8;
-  margin-bottom: 25px;
+  margin-bottom: 20px;
 }
 
 /* ===========================
@@ -285,19 +319,23 @@ nav a:hover::after {
 
 .project-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 30px;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 28px;
+  align-items: stretch;
 }
 
 .project-card {
   background: var(--card-bg);
   border: 1px solid var(--border-color);
-  border-radius: 12px;
-  padding: 40px 30px;
-  transition: all 0.3s ease;
-  cursor: pointer;
+  border-radius: 16px;
+  padding: 32px 24px;
+  transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
   position: relative;
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  box-shadow: var(--shadow-soft);
 }
 
 .project-card::before {
@@ -313,55 +351,59 @@ nav a:hover::after {
   transition: transform 0.3s ease;
 }
 
-.project-card:hover {
-  background: rgba(0, 102, 255, 0.1);
-  border-color: var(--primary-color);
-  transform: translateY(-10px);
-  box-shadow: 0 10px 40px rgba(0, 102, 255, 0.2);
+.project-card:hover,
+.project-card:focus-within {
+  background: rgba(0, 102, 255, 0.08);
+  border-color: rgba(0, 102, 255, 0.7);
+  transform: translateY(-8px);
+  box-shadow: 0 16px 35px rgba(0, 102, 255, 0.16);
 }
 
-.project-card:hover::before {
+.project-card:hover::before,
+.project-card:focus-within::before {
   transform: scaleX(1);
 }
 
 .project-icon {
-  font-size: 48px;
-  margin-bottom: 20px;
+  font-size: 2.8rem;
+  margin-bottom: 16px;
 }
 
 .project-category {
   color: var(--secondary-color);
-  font-size: 12px;
-  font-weight: 600;
-  letter-spacing: 2px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.2rem;
   display: block;
-  margin-bottom: 10px;
+  margin-bottom: 12px;
 }
 
 .project-card h3 {
-  font-size: 24px;
-  margin-bottom: 15px;
+  font-size: 1.45rem;
+  margin-bottom: 12px;
   font-weight: 700;
 }
 
 .project-card p {
   color: var(--text-muted);
-  font-size: 16px;
-  margin-bottom: 25px;
-  line-height: 1.6;
+  font-size: 1rem;
+  margin-bottom: auto;
+  line-height: 1.7;
 }
 
 .project-card a {
   color: var(--primary-color);
   text-decoration: none;
-  font-weight: 600;
-  transition: all 0.3s ease;
+  font-weight: 700;
+  transition: color 0.25s ease, transform 0.25s ease;
   display: inline-block;
+  margin-top: 20px;
 }
 
-.project-card a:hover {
+.project-card a:hover,
+.project-card a:focus-visible {
   color: var(--secondary-color);
-  transform: translateX(5px);
+  transform: translateX(4px);
 }
 
 /* ===========================
@@ -370,40 +412,42 @@ nav a:hover::after {
 
 .areas-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 25px;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: 22px;
 }
 
 .area-card {
   background: var(--card-bg);
   border: 1px solid var(--border-color);
-  border-radius: 12px;
-  padding: 35px 25px;
+  border-radius: 16px;
+  padding: 30px 22px;
   text-align: center;
-  transition: all 0.3s ease;
+  transition: transform 0.25s ease, border-color 0.25s ease, background 0.25s ease;
+  box-shadow: var(--shadow-soft);
 }
 
-.area-card:hover {
-  background: rgba(0, 102, 255, 0.1);
-  border-color: var(--primary-color);
-  transform: translateY(-8px);
+.area-card:hover,
+.area-card:focus-within {
+  background: rgba(0, 102, 255, 0.08);
+  border-color: rgba(0, 102, 255, 0.7);
+  transform: translateY(-5px);
 }
 
 .area-card span {
-  font-size: 40px;
+  font-size: 2.4rem;
   display: block;
-  margin-bottom: 15px;
+  margin-bottom: 12px;
 }
 
 .area-card h3 {
-  font-size: 18px;
+  font-size: 1.1rem;
   font-weight: 700;
-  margin-bottom: 12px;
+  margin-bottom: 10px;
 }
 
 .area-card p {
   color: var(--text-muted);
-  font-size: 14px;
+  font-size: 0.95rem;
   line-height: 1.6;
 }
 
@@ -413,46 +457,47 @@ nav a:hover::after {
 
 .process-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: 30px;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 26px;
   position: relative;
 }
 
 .process-step {
   text-align: center;
-  padding: 40px 30px;
-  background: linear-gradient(135deg, rgba(0, 102, 255, 0.05), rgba(0, 204, 153, 0.05));
-  border-radius: 12px;
+  padding: 36px 24px;
+  background: linear-gradient(135deg, rgba(0, 102, 255, 0.06), rgba(0, 204, 153, 0.06));
+  border-radius: 16px;
   border: 1px solid var(--border-color);
-  transition: all 0.3s ease;
+  transition: transform 0.25s ease, border-color 0.25s ease, background 0.25s ease;
 }
 
-.process-step:hover {
-  background: linear-gradient(135deg, rgba(0, 102, 255, 0.15), rgba(0, 204, 153, 0.15));
-  border-color: var(--secondary-color);
+.process-step:hover,
+.process-step:focus-within {
+  background: linear-gradient(135deg, rgba(0, 102, 255, 0.12), rgba(0, 204, 153, 0.12));
+  border-color: rgba(0, 204, 153, 0.8);
   transform: translateY(-5px);
 }
 
 .step-number {
-  font-size: 48px;
+  font-size: clamp(2.3rem, 4vw, 3.2rem);
   font-weight: 900;
   background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  margin-bottom: 15px;
+  margin-bottom: 14px;
 }
 
 .process-step h3 {
-  font-size: 22px;
+  font-size: 1.35rem;
   font-weight: 700;
-  margin-bottom: 15px;
+  margin-bottom: 12px;
 }
 
 .process-step p {
   color: var(--text-muted);
-  font-size: 16px;
-  line-height: 1.6;
+  font-size: 1rem;
+  line-height: 1.7;
 }
 
 /* ===========================
@@ -460,13 +505,13 @@ nav a:hover::after {
    =========================== */
 
 .vision-cta {
-  background: linear-gradient(135deg, rgba(0, 102, 255, 0.15), rgba(0, 204, 153, 0.15));
+  background: linear-gradient(135deg, rgba(0, 102, 255, 0.14), rgba(0, 204, 153, 0.14));
   padding: 80px 40px;
   text-align: center;
-  border-radius: 12px;
+  border-radius: 16px;
   max-width: 1200px;
-  margin: 60px auto;
-  border: 1px solid var(--border-color);
+  margin: 40px auto 0;
+  border: 1px solid rgba(255, 255, 255, 0.06);
 }
 
 .vision-cta .section-label {
@@ -474,17 +519,15 @@ nav a:hover::after {
 }
 
 .vision-cta h2 {
-  font-size: 48px;
-  margin-bottom: 25px;
+  font-size: clamp(2rem, 4vw, 3rem);
+  margin-bottom: 22px;
 }
 
 .vision-cta p {
   color: var(--text-muted);
-  font-size: 18px;
-  margin-bottom: 35px;
-  max-width: 600px;
-  margin-left: auto;
-  margin-right: auto;
+  font-size: 1.06rem;
+  margin: 0 auto 30px;
+  max-width: 700px;
   line-height: 1.8;
 }
 
@@ -493,63 +536,64 @@ nav a:hover::after {
    =========================== */
 
 footer {
-  background: linear-gradient(135deg, rgba(10, 14, 39, 0.95), rgba(26, 31, 58, 0.95));
-  border-top: 1px solid var(--border-color);
-  padding: 60px 40px 30px;
+  background: linear-gradient(135deg, rgba(10, 14, 39, 0.98), rgba(26, 31, 58, 0.98));
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  padding: 60px 40px 24px;
   margin-top: 80px;
 }
 
 .footer-content {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 50px;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 36px;
   max-width: 1200px;
-  margin: 0 auto 40px;
+  margin: 0 auto 32px;
 }
 
 .footer-content h3 {
-  font-size: 20px;
+  font-size: 1.25rem;
   font-weight: 900;
   background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  margin-bottom: 15px;
+  margin-bottom: 14px;
 }
 
 .footer-content p {
   color: var(--text-muted);
-  font-size: 14px;
-  line-height: 1.6;
+  font-size: 0.92rem;
+  line-height: 1.7;
 }
 
 .footer-links {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 10px;
 }
 
 .footer-links a {
   color: var(--text-muted);
   text-decoration: none;
-  font-size: 14px;
-  transition: all 0.3s ease;
+  font-size: 0.9rem;
+  transition: color 0.25s ease, transform 0.25s ease;
 }
 
-.footer-links a:hover {
+.footer-links a:hover,
+.footer-links a:focus-visible {
   color: var(--secondary-color);
-  transform: translateX(5px);
+  transform: translateX(4px);
 }
 
 .footer-bottom {
   text-align: center;
-  padding-top: 30px;
-  border-top: 1px solid var(--border-color);
+  padding-top: 22px;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
 }
 
 .footer-bottom p {
   color: var(--text-muted);
-  font-size: 13px;
+  font-size: 0.82rem;
 }
 
 /* ===========================
@@ -563,10 +607,11 @@ footer {
   top: 100%;
   left: 0;
   right: 0;
-  background: var(--dark-bg);
-  border-bottom: 1px solid var(--border-color);
-  padding: 20px 40px;
+  background: rgba(10, 14, 39, 0.98);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 20px 22px;
   gap: 15px;
+  box-shadow: 0 18px 30px rgba(0, 0, 0, 0.2);
 }
 
 /* ===========================
@@ -579,7 +624,7 @@ footer {
   }
 
   .logo-box {
-    font-size: 18px;
+    font-size: 1.1rem;
   }
 
   .menu-toggle {
@@ -592,21 +637,13 @@ footer {
   }
 
   .hero {
-    padding: 60px 20px;
-    min-height: 400px;
-  }
-
-  .hero h1 {
-    font-size: 36px;
-  }
-
-  .hero-text {
-    font-size: 16px;
+    padding: 70px 20px 60px;
+    min-height: 440px;
   }
 
   .hero-buttons {
     flex-direction: column;
-    gap: 15px;
+    gap: 14px;
   }
 
   .btn {
@@ -618,17 +655,13 @@ footer {
     padding: 60px 20px;
   }
 
-  .section h2 {
-    font-size: 32px;
-  }
-
   .project-grid {
     grid-template-columns: 1fr;
     gap: 20px;
   }
 
   .areas-grid {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 15px;
   }
 
@@ -638,45 +671,37 @@ footer {
 
   .vision-cta {
     padding: 50px 20px;
-    margin: 40px 20px;
+    margin: 32px 20px 0;
   }
 
-  .vision-cta h2 {
-    font-size: 28px;
-  }
-
-  .footer-content {
-    gap: 30px;
+  footer {
+    padding-left: 20px;
+    padding-right: 20px;
   }
 }
 
 @media (max-width: 480px) {
   .hero h1 {
-    font-size: 28px;
+    font-size: 2.2rem;
   }
 
   .section h2 {
-    font-size: 24px;
+    font-size: 1.8rem;
   }
 
   .project-card {
-    padding: 25px 20px;
+    padding: 24px 18px;
   }
 
   .areas-grid {
     grid-template-columns: 1fr;
   }
 
-  .area-card span {
-    font-size: 32px;
-  }
-
   .vision-cta {
     padding: 40px 15px;
-    margin: 30px 15px;
   }
 
   footer {
-    padding: 40px 20px 20px;
+    padding: 40px 20px 18px;
   }
 }
