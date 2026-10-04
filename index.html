@@ -162,11 +162,135 @@
     </div>
   </footer>
 
+  <div id="aiChatWidget" class="ai-chat-widget" aria-live="polite">
+    <button id="chatToggle" class="chat-toggle" type="button" aria-label="Open AI assistant">AI</button>
+
+    <div id="chatPanel" class="chat-panel hidden" role="dialog" aria-modal="false" aria-label="AI assistant chat">
+      <div class="chat-header">
+        <div>
+          <h3>christoflightX-1 AI</h3>
+        </div>
+        <button id="chatClose" class="chat-close" type="button" aria-label="Close chat">×</button>
+      </div>
+
+      <div id="chatMessages" class="chat-messages">
+        <div class="message bot">
+          Hi! I’m the christoflightX-1 assistant. Ask me about the projects, innovations, experiments, or my engineering vision.
+        </div>
+      </div>
+
+      <div class="chat-suggested">
+        <button class="suggestion" type="button">What projects do you have?</button>
+        <button class="suggestion" type="button">What is your vision?</button>
+        <button class="suggestion" type="button">How can I contact you?</button>
+      </div>
+
+      <div class="chat-input-row">
+        <input id="chatInput" type="text" placeholder="Ask about engineering ideas..." aria-label="Ask the assistant">
+        <button id="sendBtn" type="button">Send</button>
+      </div>
+    </div>
+  </div>
+
   <script>
     function toggleMenu() {
       const nav = document.getElementById("mainNav");
       nav.classList.toggle("active");
     }
+
+    const chatToggle = document.getElementById('chatToggle');
+    const chatPanel = document.getElementById('chatPanel');
+    const chatClose = document.getElementById('chatClose');
+    const chatInput = document.getElementById('chatInput');
+    const sendBtn = document.getElementById('sendBtn');
+    const chatMessages = document.getElementById('chatMessages');
+    const suggestions = document.querySelectorAll('.suggestion');
+
+    function addMessage(text, type) {
+      const msg = document.createElement('div');
+      msg.className = `message ${type}`;
+      msg.textContent = text;
+      chatMessages.appendChild(msg);
+      chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+
+    function getBotReply(userText) {
+      const text = userText.toLowerCase();
+
+      if (text.includes('project') || text.includes('projects')) {
+        return 'My portfolio focuses on marine engineering, aerospace and drones, hybrid propulsion systems, and future mobility ideas. You can explore them on the Projects page.';
+      }
+
+      if (text.includes('vision') || text.includes('about') || text.includes('who')) {
+        return 'christoflightX-1 is a personal engineering platform focused on turning ideas into practical concepts, experiments, prototypes, and future systems.';
+      }
+
+      if (text.includes('innovation') || text.includes('innovations')) {
+        return 'I explore smart systems, future concepts, advanced mechanisms, and problem-solving engineering ideas designed for the next generation of technology.';
+      }
+
+      if (text.includes('experiment') || text.includes('experiments')) {
+        return 'I document prototype testing, performance analysis, engineering research, and iterative development based on real results.';
+      }
+
+      if (text.includes('contact') || text.includes('email') || text.includes('reach')) {
+        return 'You can contact me at samuelchristopher344@gmail.com. The contact page also contains the project contact details.';
+      }
+
+      if (text.includes('engineer') || text.includes('study') || text.includes('student')) {
+        return 'I am building this portfolio as an engineering student, focusing on future systems, design thinking, experimentation, and practical innovation.';
+      }
+
+      if (text.includes('drone') || text.includes('aerospace')) {
+        return 'Drone concepts are a major focus in my work, including unconventional structures, propulsion ideas, and futuristic aircraft thinking.';
+      }
+
+      if (text.includes('propulsion')) {
+        return 'My propulsion interests include hybrid systems, alternative energy, mechanical design, and improving transport performance through smarter engineering choices.';
+      }
+
+      if (text.includes('hello') || text.includes('hi')) {
+        return 'Hello! I can help you explore the projects, innovations, experiments, and engineering vision behind christoflightX-1.';
+      }
+
+      return 'I can help with the projects, innovations, experiments, engineering vision, and contact details. Try asking about drones, propulsion, or the portfolio itself.';
+    }
+
+    function sendMessage() {
+      const value = chatInput.value.trim();
+      if (!value) return;
+
+      addMessage(value, 'user');
+      chatInput.value = '';
+
+      setTimeout(() => {
+        addMessage(getBotReply(value), 'bot');
+      }, 300);
+    }
+
+    chatToggle.addEventListener('click', () => {
+      chatPanel.classList.toggle('hidden');
+      chatInput.focus();
+    });
+
+    chatClose.addEventListener('click', () => {
+      chatPanel.classList.add('hidden');
+    });
+
+    sendBtn.addEventListener('click', sendMessage);
+
+    chatInput.addEventListener('keydown', (event) => {
+      if (event.key === 'Enter') {
+        sendMessage();
+      }
+    });
+
+    suggestions.forEach((button) => {
+      button.addEventListener('click', () => {
+        chatInput.value = button.textContent;
+        sendMessage();
+      });
+    });
   </script>
 </body>
 </html>
