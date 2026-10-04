@@ -3,38 +3,95 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Contact Us - samblog</title>
-  <meta name="description" content="Contact samblog for questions, feedback, or support.">
+  <title>Contact | christoflightX-1</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<header>
-  <div class="logo-box">samblog</div>
-  <nav>
-    <a href="index.html">Home</a>
-    <a href="about.html">About</a>
-    <a href="privacy.html">Privacy Policy</a>
-    <a href="contact.html">Contact</a>
-  </nav>
-</header>
+  <header class="site-header">
+    <div class="logo-box">christoflightX-1</div>
+    <button class="menu-toggle" onclick="toggleMenu()" aria-label="Open navigation menu">☰</button>
+    <nav id="mainNav">
+      <a href="index.html">Home</a>
+      <a href="projects.html">Projects</a>
+      <a href="innovations.html">Innovations</a>
+      <a href="experiments.html">Experiments</a>
+      <a href="wiki.html">Engineering Wiki</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+  </header>
 
-<main class="page-content">
-  <h1>Contact Us</h1>
+  <main>
+    <section class="section">
+      <div class="section-heading">
+        <p class="section-label">CONTACT</p>
+        <h2>Let's Connect</h2>
+        <p>Reach out for collaborations, questions, or discussions about engineering ideas and future projects.</p>
+      </div>
 
-  <p>If you have questions, feedback, or business inquiries, you can reach us using the contact below.</p>
+      <div class="project-grid">
+        <article class="project-card">
+          <div class="project-icon">📧</div>
+          <div class="project-content">
+            <span class="project-category">EMAIL</span>
+            <h3>Send an Email</h3>
+            <p>samuelchristopher344@gmail.com</p>
+            <a href="mailto:samuelchristopher344@gmail.com">Contact Me →</a>
+          </div>
+        </article>
 
-  <p>
-    📧 Email:  
-    <strong>samuelchristopher344@gmail.com</strong>
-  </p>
+        <article class="project-card">
+          <div class="project-icon">📍</div>
+          <div class="project-content">
+            <span class="project-category">LOCATION</span>
+            <h3>Open to Collaboration</h3>
+            <p>Available for engineering discussions, student projects, and innovation-focused conversations.</p>
+            <a href="#">Remote / Online →</a>
+          </div>
+        </article>
 
-  <p>We usually respond within 24–48 hours.</p>
-</main>
+        <article class="project-card">
+          <div class="project-icon">🤝</div>
+          <div class="project-content">
+            <span class="project-category">INTERESTS</span>
+            <h3>Project Dialogue</h3>
+            <p>Open to learning, technical feedback, concept discussions, and engineering-focused collaborations.</p>
+            <a href="#">Let's Talk →</a>
+          </div>
+        </article>
+      </div>
+    </section>
+  </main>
 
-<footer>
-  <p>© 2026 samblog. All rights reserved.</p>
-</footer>
+  <footer>
+    <div class="footer-content">
+      <div>
+        <h3>christoflightX-1</h3>
+        <p>Engineering Ideas. Building the Future.</p>
+      </div>
+      <div class="footer-links">
+        <a href="index.html">Home</a>
+        <a href="projects.html">Projects</a>
+        <a href="innovations.html">Innovations</a>
+        <a href="experiments.html">Experiments</a>
+        <a href="wiki.html">Engineering Wiki</a>
+        <a href="about.html">About</a>
+        <a href="privacy.html">Privacy Policy</a>
+        <a href="contact.html">Contact</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 christoflightX-1. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script>
+    function toggleMenu() {
+      const nav = document.getElementById("mainNav");
+      nav.classList.toggle("active");
+    }
+  </script>
 
 </body>
-  </html>
+</html>
