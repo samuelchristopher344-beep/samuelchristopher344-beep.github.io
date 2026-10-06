@@ -68,3 +68,12 @@ if (search && grid) {
     }
   });
 }
+
+window.addEventListener("load", () => {
+  const s = document.createElement("script");
+  s.async = true;
+  s.src = "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1758802460740402";
+  s.crossOrigin = "anonymous";
+  s.onerror = () => {};
+  document.head.appendChild(s);
+});
