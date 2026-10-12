@@ -1,0 +1,14 @@
+{
+  "name": "christoflightx-1",
+  "version": "1.0.0",
+  "description": "Engineering Projects & Innovation",
+  "private": true,
+  "scripts": {
+    "build": "node -e \"console.log('Static site - no build required')\"",
+    "dev": "npx http-server -p 3000"
+  },
+  "dependencies": {
+    "@vercel/analytics": "^1.4.1"
+  },
+  "devDependencies": {}
+}
