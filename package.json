@@ -1,0 +1,28 @@
+{
+  "name": "primary",
+  "version": "1.0.0",
+  "description": "Personal engineering platform: projects, innovations, experiments, and wiki.",
+  "main": "index.js",
+  "scripts": {
+    "build": "esbuild src/site.js --bundle --outfile=js/site.js --format=iife --minify",
+    "dev": "esbuild src/site.js --bundle --outfile=js/site.js --format=iife --watch",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/samuelchristopher344-beep/samuelchristopher344-beep.github.io.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/samuelchristopher344-beep/samuelchristopher344-beep.github.io/issues"
+  },
+  "homepage": "https://github.com/samuelchristopher344-beep/samuelchristopher344-beep.github.io#readme",
+  "dependencies": {
+    "@vercel/analytics": "^2.0.1"
+  },
+  "devDependencies": {
+    "esbuild": "^0.28.2"
+  }
+}
